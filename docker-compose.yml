@@ -7,10 +7,19 @@ services:
     ports: 
       - 8000:8000
       - 8001:8001
-  client:
-    build: Telemetry
-    image: oc/telemetryclient
-    command: client
+
+  telemetry_string_receiver:
+    build: TelemetryReceiver
+    image: oc/telemetryreceiver
+    command: string
+    network_mode: host
+    depends_on: 
+      - telemetry_generator
+
+  telemetry_binary_receiver:
+    build: TelemetryReceiver
+    image: oc/telemetryreceiver
+    command: binary
     network_mode: host
     depends_on: 
       - telemetry_generator
