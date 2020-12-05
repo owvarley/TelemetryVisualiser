@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  telemetry_generator:
+    build: Telemetry
+    image: oc/telemetrygenerator
+    command: generate
+    ports: 
+      - 8000:8000
+      - 8001:8001
+  client:
+    build: Telemetry
+    image: oc/telemetryclient
+    command: client
+    network_mode: host
+    depends_on: 
+      - telemetry_generator
