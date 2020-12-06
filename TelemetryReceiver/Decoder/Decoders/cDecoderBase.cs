@@ -12,6 +12,19 @@ namespace OpenCosmos
 
         public abstract cTelemetryEntry Decode(byte[] buffer);
 
+        private string GetHost()
+        {
+            var host = Environment.GetEnvironmentVariable("TELEMETRY_HOST");
+
+            if (host is null)
+            {
+                Console.WriteLine("No host supplied via TELEMETRY_HOST environment variable, defaulting to localhost");
+                host = "localhost";
+            }
+
+            return host;
+        }
+
         public byte[] ReadFromStream(NetworkStream ns)
         {
             var buffer = new byte[_BufferSize];
@@ -41,8 +54,12 @@ namespace OpenCosmos
 
             try
             {
-                _Client = new cTelemetryClient("localhost", _Port);
+                var host = GetHost();
+
+                _Client = new cTelemetryClient(host, _Port);
                 NetworkStream ns = _Client.GetStream();
+
+                Console.WriteLine("Telemetry Client started for {0} on port {1}", host, _Port);
 
                 while (true)
                 {
