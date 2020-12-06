@@ -11,6 +11,9 @@ namespace OpenCosmos
         private readonly bool _ParsedCorrectly;
 
         public bool IsValid => _ParsedCorrectly;
+        public DateTime Timestamp => _TimeStamp;
+        public UInt16 Id => _Id;
+        public float Value => _Value;
 
         public static DateTime ConvertUnixToDateTime(Int64 unixTimeStamp)
         {

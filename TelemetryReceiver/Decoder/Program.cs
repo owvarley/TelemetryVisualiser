@@ -10,7 +10,7 @@ namespace OpenCosmos
 
             try
             {
-                var receiver = cDecoderFactory.Create(args[FIRST_ARG], new cConsoleDriver());
+                var receiver = cDecoderFactory.Create(args[FIRST_ARG], new cInfluxDriver());
                 Console.WriteLine(receiver.GetType());
                 receiver.Start();
             }

@@ -13,6 +13,8 @@ services:
     image: oc/telemetryreceiver
     command: string
     network_mode: host
+    env_file: 
+      - env_vars.env
     depends_on: 
       - telemetry_generator
 
@@ -21,5 +23,7 @@ services:
     image: oc/telemetryreceiver
     command: binary
     network_mode: host
+    env_file: 
+      - env_vars.env
     depends_on: 
       - telemetry_generator
