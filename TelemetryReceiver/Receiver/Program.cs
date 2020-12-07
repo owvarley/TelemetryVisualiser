@@ -44,7 +44,7 @@ namespace OpenCosmos
 
             try
             {
-                var receiver = cReceiverFactory.Create(GetHost(), GetPort(), args[FIRST_ARG], new cConsoleDriver());
+                var receiver = cReceiverFactory.Create(GetHost(), GetPort(), args[FIRST_ARG], new cInfluxDriver());
                 Console.WriteLine("Using Receive Type: {0}", receiver.GetType());
 
                 receiver.Start();
