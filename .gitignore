@@ -1,6 +1,6 @@
 .vscode
 FromPep/
-TelemetryReceiver/Decoder/bin/
-TelemetryReceiver/Decoder/obj/
-TelemetryReceiver/DecoderTest/obj/
-TelemetryReceiver/DecoderTest/bin/
+TelemetryReceiver/Receiver/bin/
+TelemetryReceiver/Receiver/obj/
+TelemetryReceiver/ReceiverTest/obj/
+TelemetryReceiver/ReceiverTest/bin/
