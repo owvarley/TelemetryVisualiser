@@ -75,6 +75,6 @@ namespace OpenCosmos
             return Create(rawTelemetry);
         }
 
-        public cStringDecoder(iDBDriver NewDBDriver) : base(READ_BUFFER_BYTES, RECEIVER_PORT, NewDBDriver) { }
+        public cStringDecoder(iDBDriver NewDBDriver) : base(READ_BUFFER_BYTES, RECEIVER_PORT, NewDBDriver, "string_sat") { }
     }
 }

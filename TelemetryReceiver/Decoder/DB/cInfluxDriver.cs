@@ -14,11 +14,11 @@ namespace OpenCosmos
         private readonly string _Bucket;
         private readonly string _Organisation;
 
-        public bool WriteToDB(cTelemetryEntry telemetryEntry)
+        public bool WriteToDB(cTelemetryEntry telemetryEntry, string SatName)
         {
             var point = PointData
                 .Measurement("mem")
-                .Tag("host", "host1-" + telemetryEntry.Id)
+                .Tag("host", SatName + "-ID" + telemetryEntry.Id.ToString("00"))
                 .Field("value", telemetryEntry.Value)
                 .Timestamp(telemetryEntry.Timestamp, WritePrecision.Ns);
 

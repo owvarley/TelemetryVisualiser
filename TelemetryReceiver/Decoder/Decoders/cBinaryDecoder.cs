@@ -52,6 +52,6 @@ namespace OpenCosmos
             return Create(buffer);
         }
 
-        public cBinaryDecoder(iDBDriver NewDBDriver) : base(READ_BUFFER_BYTES, RECEIVER_PORT, NewDBDriver) { }
+        public cBinaryDecoder(iDBDriver NewDBDriver) : base(READ_BUFFER_BYTES, RECEIVER_PORT, NewDBDriver, "binary_sat") { }
     }
 }

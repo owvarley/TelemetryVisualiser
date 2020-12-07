@@ -9,6 +9,7 @@ namespace OpenCosmos
         private readonly int _Port;
         protected readonly iDBDriver _DBDriver;
         protected cTelemetryClient _Client;
+        private readonly string _SatelliteName;
 
         public abstract cTelemetryEntry Decode(byte[] buffer);
 
@@ -78,7 +79,7 @@ namespace OpenCosmos
                             // catch. This check ensure protection of the database.
                             if (telemetryEntry.IsValid)
                             {
-                                _DBDriver.WriteToDB(telemetryEntry);
+                                _DBDriver.WriteToDB(telemetryEntry, _SatelliteName);
                             }
                             else
                             {
@@ -116,11 +117,12 @@ namespace OpenCosmos
             }
         }
 
-        public cDecoderBase(int BufferSize, int NewPort, iDBDriver NewDBDriver)
+        public cDecoderBase(int BufferSize, int NewPort, iDBDriver NewDBDriver, string NewSatName)
         {
             _BufferSize = BufferSize;
             _Port = NewPort;
             _DBDriver = NewDBDriver;
+            _SatelliteName = NewSatName;
         }
     }
 }
