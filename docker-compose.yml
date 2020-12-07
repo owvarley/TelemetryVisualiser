@@ -27,3 +27,15 @@ services:
       - env_vars.env
     depends_on: 
       - telemetry_generator
+
+  telemetry_visualiser:
+    build: InfluxDB
+    image: oc/telemetryvisualiser
+    env_file: 
+      - env_vars.env
+    ports:
+      - 8086:8086
+    depends_on:
+      - telemetry_string_receiver
+      - telemetry_binary_receiver
+    
