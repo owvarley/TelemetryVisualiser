@@ -109,7 +109,6 @@ spec:
                   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
                   |> filter(fn: (r) => r["_measurement"] == "mem")
                   |> filter(fn: (r) => r["_field"] == "value")
-                  |> filter(fn: (r) => r["host"] == "host1-1" or r["host"] == "host1-2")
                   |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)
                   |> yield(name: "mean")
         width: 6
@@ -123,14 +122,14 @@ spec:
         decimalPlaces: 2
         height: 1
         kind: Single_Stat
-        name: Telemetry ID 1
+        name: String Encoded Satellite (ID01)
         queries:
           - query: |-
                 from(bucket: "telemetry")
                   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
                   |> filter(fn: (r) => r["_measurement"] == "mem")
                   |> filter(fn: (r) => r["_field"] == "value")
-                  |> filter(fn: (r) => r["host"] == "host1-1")
+                  |> filter(fn: (r) => r["host"] == "string_sat-ID01")
                   |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)
                   |> yield(name: "last")
         width: 3
@@ -160,14 +159,13 @@ spec:
             fieldName: _measurement
         height: 8
         kind: Table
-        name: Telemetry Table (ID 1)
+        name: Telemetry Table
         queries:
           - query: |-
                 from(bucket: "telemetry")
                   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
                   |> filter(fn: (r) => r["_measurement"] == "mem")
                   |> filter(fn: (r) => r["_field"] == "value")
-                  |> filter(fn: (r) => r["host"] == "host1-1" or r["host"] == "host1-2")
                   |> aggregateWindow(every: 1s, fn: mean, createEmpty: false)
                   |> yield(name: "mean")
         tableOptions:
@@ -185,14 +183,14 @@ spec:
         decimalPlaces: 2
         height: 1
         kind: Single_Stat
-        name: Telemetry ID 2
+        name: Binary Encoded Satellite (ID02)
         queries:
           - query: |-
                 from(bucket: "telemetry")
                   |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
                   |> filter(fn: (r) => r["_measurement"] == "mem")
                   |> filter(fn: (r) => r["_field"] == "value")
-                  |> filter(fn: (r) => r["host"] == "host1-2")
+                  |> filter(fn: (r) => r["host"] == "binary_sat-ID02")
                   |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)
                   |> yield(name: "last")
         width: 3
