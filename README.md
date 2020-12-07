@@ -38,7 +38,7 @@ The project has been designed to use **Influx OSS DB** as the storage and visual
 The Telemetry Visualiser handles the storage and display of the telemetry data that's received, decoded and transmitted onwards by a **Telemetry Receiver**. It provides a thin wrapper around the Influx OSS DB official Docker image (v2.0.2). The wrapper handles the initialisation and application of the appropriate template to ensure the most efficient display of telemetry within the solution.
 
 ### Usage
-To view the telemetry, open a web browser and go to ```http:\\localhost:8086``` and then login using the credentials supplied in the **env_vars.env** file. Once logged in, click Dashboards and then **Satellite Telemetry** to view a display of the data being transmitted from the **Telemetry Generator**. By default, the dashboard will be paused so be sure to play the play button in the top right to view a live display of data from the satellites.
+To view the telemetry, open a web browser and go to ```http:\\localhost:8086``` and then login using the credentials supplied in the **env_vars.env** file. Once logged in, click **Boards** and then **Satellite Telemetry** to view a display of the data being transmitted from the **Telemetry Generator**. By default, the dashboard will be paused so be sure to select an appropriate refresh rate (Suggested is 5s) from the top right options to view a live display of data from the satellites.
 
 ## Running the Project
 The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
@@ -47,4 +47,4 @@ The project has been configured to be run using **Docker Compose**. To run it, f
 2. Edit the **env_vars.env** file to supply a **INFLUXDB_PASSWORD** and **INFLUXDB_TOKEN**
 3. Type **docker-compose up --build** from the root directory
 4. Open a web browser and navigate to **http:\\localhost:8086** then log in using the username and password from **env_vars.env**
-5. Click the dashboard option of the side-bar, select **Satellite Telemetry** then click play.
+5. Click the **boards** option of the side-bar, select **Satellite Telemetry** then select **5s** from the Refresh rate drop-down.
