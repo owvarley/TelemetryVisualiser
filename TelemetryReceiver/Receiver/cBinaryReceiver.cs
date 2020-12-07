@@ -1,11 +1,11 @@
 using System;
+using System.Net.Sockets;
 
 namespace OpenCosmos
 {
-    public class cBinaryDecoder : cDecoderBase
+    public class cBinaryReceiver : cReceiverBase
     {
-        private static int RECEIVER_PORT = 8001;
-        private static int READ_BUFFER_BYTES = 18; 
+        private static int FRAME_LENGTH_BYTES = 18; 
 
         private bool CheckHeaderPresent(byte[] rawTelemetry)
         {
@@ -23,7 +23,7 @@ namespace OpenCosmos
             }
         }
 
-        private static cTelemetryEntry Create(byte[] rawTelemetry)
+        private cTelemetryEntry Decode(byte[] rawTelemetry)
         {
             // Binary Packet is LE and as follows
             // Header    |  0 - 3  | 4 Bytes |
@@ -45,13 +45,24 @@ namespace OpenCosmos
             return new cTelemetryEntry(teleTimestamp, teleId, teleValue);
         }
 
-        public override cTelemetryEntry Decode(byte[] buffer)
+        public override cTelemetryEntry DecodeFrame(byte[] frame)
         {
-            if (!CheckHeaderPresent(buffer)) throw new TelemetryFormatException("Binary Format incorrect, 4 Byte header (00010203) missing");
+            if (!CheckHeaderPresent(frame)) throw new TelemetryFormatException("Binary Format incorrect, 4 Byte header (00010203) missing");
 
-            return Create(buffer);
+            return Decode(frame);
         }
 
-        public cBinaryDecoder(iDBDriver NewDBDriver) : base(READ_BUFFER_BYTES, RECEIVER_PORT, NewDBDriver, "binary_sat") { }
+        public override byte[] ReadFrameFromStream(NetworkStream ns, ref int TotalBytesReadFromStream)
+        {
+            var frame = new byte[FRAME_LENGTH_BYTES];
+            TotalBytesReadFromStream = ns.Read(frame, 0, frame.Length);
+
+            return frame;
+        }
+
+        public cBinaryReceiver(string NewSatName, string NewHost, int NewPort, iDBDriver DBDriver) : base(NewSatName, NewHost, NewPort, DBDriver)
+        {
+
+        }
     }
 }

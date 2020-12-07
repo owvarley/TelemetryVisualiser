@@ -2,16 +2,16 @@ using System;
 
 namespace OpenCosmos
 {
-    public static class cDecoderFactory
+    public static class cReceiverFactory
     {
-        public static iDecoder Create (string encodingType, iDBDriver dBDriver)
+        public static iReceiver Create (string host, int port, string encodingType, iDBDriver dBDriver)
         {
             switch (encodingType.ToLower())
             {
                 case "string":
-                    return new cStringDecoder(dBDriver);
+                    return new cStringReceiver("string_sat", host, port, dBDriver);
                 case "binary":
-                    return new cBinaryDecoder(dBDriver);
+                    return new cBinaryReceiver("binary_sat", host, port, dBDriver);
                 default:
                     throw new UnknownEncodingException();
             }

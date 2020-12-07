@@ -3,7 +3,7 @@ using Xunit;
 
 namespace OpenCosmos.Test
 {
-    public class cBinaryDecoderTest
+    public class cBinaryReceiverTest
     {
         private cTelemetryEntry GetExpected(Int64 timestamp, UInt16 teleType, float teleValue)
         {
@@ -33,7 +33,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_CheckHeaderPresent()
         {
-            var decoder = new cBinaryDecoder(new cConsoleDriver());
+            var receiver = new cBinaryReceiver("name", "host", 0, null);
             var rawTele = new byte[18];
 
             rawTele[0] = 00;
@@ -41,19 +41,19 @@ namespace OpenCosmos.Test
             rawTele[2] = 02;
             rawTele[4] = 04;
             
-            Assert.Throws<TelemetryFormatException>(() => decoder.Decode(rawTele));
+            Assert.Throws<TelemetryFormatException>(() => receiver.DecodeFrame(rawTele));
         }
 
         [Fact]
         public void Test_Create()
         {
-            var decoder = new cBinaryDecoder(null);
+            var receiver = new cBinaryReceiver("name", "host", 0, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 02;
             float teleValue = 2.0f;
 
             var rawTele = BuildTeleByteArray(unixTimeStamp, teleType, teleValue);
-            var actualTele = decoder.Decode(rawTele);
+            var actualTele = receiver.DecodeFrame(rawTele);
             var expectedTele = GetExpected(unixTimeStamp, teleType, teleValue);
 
             Assert.Equal(expectedTele.ToString(), actualTele.ToString());
@@ -62,13 +62,13 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Negative()
         {
-            var decoder = new cBinaryDecoder(null);
+            var receiver = new cBinaryReceiver("name", "host", 0, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 02;
             float teleValue = -500.0f;
 
             var rawTele = BuildTeleByteArray(unixTimeStamp, teleType, teleValue);
-            var actualTele = decoder.Decode(rawTele);
+            var actualTele = receiver.DecodeFrame(rawTele);
             var expectedTele = GetExpected(unixTimeStamp, teleType, teleValue);
 
             Assert.Equal(expectedTele.ToString(), actualTele.ToString());
@@ -77,13 +77,13 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Max()
         {
-            var decoder = new cBinaryDecoder(null);
+            var receiver = new cBinaryReceiver("name", "host", 0, null);
             Int64 unixTimeStamp = 253402300799; // Max value for FromUnixTimeSeconds
             UInt16 teleType = UInt16.MaxValue;
             float teleValue = float.MaxValue;
 
             var rawTele = BuildTeleByteArray(unixTimeStamp, teleType, teleValue);
-            var actualTele = decoder.Decode(rawTele);
+            var actualTele = receiver.DecodeFrame(rawTele);
             var expectedTele = GetExpected(unixTimeStamp, teleType, teleValue);
 
             Assert.Equal(expectedTele.ToString(), actualTele.ToString());
