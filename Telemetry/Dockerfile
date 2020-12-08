@@ -1,7 +1,8 @@
 FROM alpine:3.12.1
 
+COPY telemetry /
+RUN chmod +x telemetry
 RUN adduser --disabled-password tele_user
 USER tele_user
-COPY telemetry /usr/bin/
 
-ENTRYPOINT ["telemetry"]
+ENTRYPOINT ["./telemetry"]
