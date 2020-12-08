@@ -1,14 +1,14 @@
 # TelemetryVisualiser
 This project allows for telemetry from a ground station to be processed, stored and available for display.
 
-## Running the Project
-The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
-
-1. Open an appropriate command line client and clone the Git repository to your local machine
-2. Edit the **env_vars.env** file to supply a **INFLUXDB_PASSWORD** and **INFLUXDB_TOKEN**
-3. Type **docker-compose up --build** from the root directory
-4. Open a web browser and navigate to **http:\\localhost:8086** then log in using the username and password from **env_vars.env**
-5. Click the **boards** option of the side-bar, select **Satellite Telemetry** then select **5s** from the Refresh rate drop-down.
+> ## TLDR - Running the Project
+> The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
+> 
+> 1. Open an appropriate command line client and clone the Git repository to your local machine
+> 2. Edit the **env_vars.env** file and replace the default entries for **INFLUXDB_PASSWORD** and **INFLUXDB_TOKEN**
+> 3. Type **docker-compose up --build** from the root directory
+> 4. Open a web browser and navigate to **http:\\localhost:8086** then log in using the username and password from **env_vars.env**
+> 5. Click the **boards** option of the side-bar, select **Satellite Telemetry** then select **5s** from the Refresh rate drop-down.
 
 ## Components
 The project is comprised of three distinct services:

@@ -72,6 +72,18 @@ namespace OpenCosmos
             if (_Organisation is null) throw new ArgumentException("No organisation provided. INFLUXDB_ORG must be set to the organisation to use");
             if (pass is null || pass == "") throw new ArgumentException("No password defined. INFLUXDB_PASSWORD must be set to a valid password to configure the Influx DB");
 
+            // Check for default password
+            if (pass == "defaultpassword_changeme")
+            {
+                Log.Log(enLogLevel.Warn, "** SECURITY WARNING ** : The default user password is being used, this should be changed to prevent compromise.");
+            }
+
+            // Check for default token
+            if (_Token == "defaulttoken_changeme")
+            {
+                Log.Log(enLogLevel.Warn, "** SECURITY WARNING ** : The default access token is being used, this should be changed to prevent compromise.");
+            }
+
             var sb = new StringBuilder();
             sb.AppendLine("InfluxDB Driver initialised with:");
             sb.AppendLine("Host: " + host);
