@@ -15,9 +15,9 @@ namespace OpenCosmos
         public UInt16 Id => _Id;
         public float Value => _Value;
 
-        public static DateTime ConvertUnixToDateTime(Int64 unixTimeStamp)
+        public static DateTime ConvertUnixToDateTime(Int64 UnixTimeStamp)
         {
-            var dto = DateTimeOffset.FromUnixTimeSeconds(unixTimeStamp);
+            var dto = DateTimeOffset.FromUnixTimeSeconds(UnixTimeStamp);
             return dto.UtcDateTime;
         }
 

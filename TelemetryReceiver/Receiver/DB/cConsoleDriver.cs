@@ -4,9 +4,9 @@ namespace OpenCosmos
 {
     public class cConsoleDriver : iDBDriver
     {
-        public bool WriteToDB(cTelemetryEntry telemetryEntry, string SatName)
+        public bool WriteToDB(cTelemetryEntry TelemetryEntry, string SatName)
         {
-            Console.WriteLine("From: {0} - {1}", SatName, telemetryEntry.ToString());
+            Console.WriteLine("From: {0} - {1}", SatName, TelemetryEntry.ToString());
             return true;
         }
     }

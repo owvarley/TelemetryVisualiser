@@ -6,6 +6,6 @@ namespace OpenCosmos
     [Serializable()]
     public class ClientDisconnectedException : Exception
     {
-        public ClientDisconnectedException(Exception exception) : base("Network Client disconnected unexpectedly", exception) { }
+        public ClientDisconnectedException(Exception ex) : base("Network Client disconnected unexpectedly", ex) { }
     }
 }

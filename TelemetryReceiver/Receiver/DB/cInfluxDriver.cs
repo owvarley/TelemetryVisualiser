@@ -40,13 +40,13 @@ namespace OpenCosmos
             );
         }
 
-        public bool WriteToDB(cTelemetryEntry telemetryEntry, string SatName)
+        public bool WriteToDB(cTelemetryEntry TelemetryEntry, string SatName)
         {
             var point = PointData
                 .Measurement("mem")
-                .Tag("host", SatName + "-ID" + telemetryEntry.Id.ToString("00"))
-                .Field("value", telemetryEntry.Value)
-                .Timestamp(telemetryEntry.Timestamp, WritePrecision.Ns);
+                .Tag("host", SatName + "-ID" + TelemetryEntry.Id.ToString("00"))
+                .Field("value", TelemetryEntry.Value)
+                .Timestamp(TelemetryEntry.Timestamp, WritePrecision.Ns);
 
             using (var writeApi = _Client.GetWriteApi())
             {

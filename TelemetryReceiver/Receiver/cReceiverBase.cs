@@ -45,7 +45,7 @@ namespace OpenCosmos
             }
         }
 
-        public abstract cTelemetryEntry DecodeFrame(byte[] frame);
+        public abstract cTelemetryEntry DecodeFrame(byte[] Frame);
 
         private void Receiver_Worker (BlockingCollection<byte[]> bc)
         {

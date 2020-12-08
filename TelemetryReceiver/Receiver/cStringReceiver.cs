@@ -12,9 +12,9 @@ namespace OpenCosmos
 
         private static readonly Logger.iLogger Log = new Logger.cLog4net(typeof(cStringReceiver));
 
-        public override cTelemetryEntry DecodeFrame(byte[] frame)
+        public override cTelemetryEntry DecodeFrame(byte[] Frame)
         {
-            var rawTelemetry = System.Text.Encoding.UTF8.GetString(frame, 0, frame.Length);
+            var rawTelemetry = System.Text.Encoding.UTF8.GetString(Frame, 0, Frame.Length);
 
             // Expecting a UTF-8 String
             // Wrapped by square brackets []
@@ -29,10 +29,10 @@ namespace OpenCosmos
             const int VALUE_POS = 2;
             const char FIELD_SEPARATOR = ':';
 
-            Int64 teleUnixTimestamp = 0;
-            DateTime teleTimestamp = DateTime.MinValue;
-            UInt16 teleId = 0;
-            float teleValue = 0.0f;
+            Int64 tele_unix_timestamp = 0;
+            DateTime tele_timestamp = DateTime.MinValue;
+            UInt16 tele_id = 0;
+            float tele_value = 0.0f;
 
             if (rawTelemetry[OPEN_BRACKET_POS] != FRAME_START_MARKER || rawTelemetry[CLOSE_BRACKET_POS] != FRAME_END_MARKER)
             {
@@ -52,9 +52,9 @@ namespace OpenCosmos
             }
 
             // Parse the Timestamp
-            if (Int64.TryParse(teleElements[TIMESTAMP_POS], out teleUnixTimestamp))
+            if (Int64.TryParse(teleElements[TIMESTAMP_POS], out tele_unix_timestamp))
             {
-                teleTimestamp = cTelemetryEntry.ConvertUnixToDateTime(teleUnixTimestamp);
+                tele_timestamp = cTelemetryEntry.ConvertUnixToDateTime(tele_unix_timestamp);
             }
             else
             {
@@ -62,18 +62,18 @@ namespace OpenCosmos
             }
 
             // Parse the ID
-            if (!UInt16.TryParse(teleElements[ID_POS], out teleId))
+            if (!UInt16.TryParse(teleElements[ID_POS], out tele_id))
             {
                 throw new TelemetryFormatException("Telemetry ID Encoding incorrect, expected 2 byte integer: " + teleElements[ID_POS]);
             }
 
             // Parse the Value
-            if (!float.TryParse(teleElements[VALUE_POS], out teleValue))
+            if (!float.TryParse(teleElements[VALUE_POS], out tele_value))
             {
                 throw new TelemetryFormatException("Telemetry Value Encoding incorrect, expected 8 byte float: " + teleElements[VALUE_POS]);
             }
 
-            return new cTelemetryEntry(teleTimestamp, teleId, teleValue);
+            return new cTelemetryEntry(tele_timestamp, tele_id, tele_value);
         }
 
         private byte ReadByte(NetworkStream ns, ref int TotalBytesReadFromStream)
@@ -84,8 +84,8 @@ namespace OpenCosmos
 
         public override byte[] ReadFrameFromStream(NetworkStream ns, ref int TotalBytesReadFromStream)
         {
-            var FrameBuffer = new byte[FRAME_BUFFER];
-            var FrameIndex = 0;
+            var frame_buffer = new byte[FRAME_BUFFER];
+            var frame_index = 0;
 
             // Read from Start Marker until End Marker
             var b = ReadByte(ns, ref TotalBytesReadFromStream);
@@ -99,8 +99,8 @@ namespace OpenCosmos
 
             // At this point we've either encountered a valid frame that starts with the correct marker
             // or an invalid frame and have fast forwarded until the start of a valid frame
-            FrameBuffer[FrameIndex] = FRAME_START_MARKER;
-            FrameIndex ++;
+            frame_buffer[frame_index] = FRAME_START_MARKER;
+            frame_index ++;
 
             do
             {
@@ -111,19 +111,19 @@ namespace OpenCosmos
                 {
                     SeekToByteAfterStartMarker(ns, ref TotalBytesReadFromStream);
                     Log.Log(enLogLevel.Warn, "Malformed Frame encountered, detected second start marker before end marker.");
-                    ResetFrame(ref FrameBuffer, ref FrameIndex);
+                    ResetFrame(ref frame_buffer, ref frame_index);
                 }
 
-                FrameBuffer[FrameIndex] = b;
-                FrameIndex++;
+                frame_buffer[frame_index] = b;
+                frame_index++;
             } while (b != FRAME_END_MARKER);
 
-            FrameBuffer[FrameIndex] = FRAME_END_MARKER;
+            frame_buffer[frame_index] = FRAME_END_MARKER;
 
             // Resize the buffer to just what was read from the stream
-            Array.Resize(ref FrameBuffer, FrameIndex);
+            Array.Resize(ref frame_buffer, frame_index);
 
-            return FrameBuffer;
+            return frame_buffer;
         }
 
         private void ResetFrame (ref byte[] Frame, ref int FrameIndex)

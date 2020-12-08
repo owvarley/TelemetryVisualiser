@@ -14,9 +14,9 @@ namespace Logger
     public interface iLogger
     {
         void Init();
-        void Log(enLogLevel level, string message);
-        void Log(enLogLevel level, string message, object arg1);
-        void Log(enLogLevel level, string message, object arg1, object arg2);
-        void Log(enLogLevel level, string message, object arg1, object arg2, object arg3);
+        void Log(enLogLevel Level, string Message);
+        void Log(enLogLevel Level, string Message, object Arg1);
+        void Log(enLogLevel Level, string Message, object Arg1, object Arg2);
+        void Log(enLogLevel Level, string Message, object Arg1, object Arg2, object Arg3);
     }
 }
