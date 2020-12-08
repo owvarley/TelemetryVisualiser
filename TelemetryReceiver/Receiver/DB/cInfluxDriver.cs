@@ -1,9 +1,11 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Core;
 using InfluxDB.Client.Writes;
+using Logger;
 
 namespace OpenCosmos
 {
@@ -13,6 +15,8 @@ namespace OpenCosmos
         private readonly string _Token;
         private readonly string _Bucket;
         private readonly string _Organisation;
+
+        private static readonly Logger.iLogger Log = new Logger.cLog4net(typeof(cInfluxDriver));
 
         public struct tInfluxConfig
         {
@@ -68,12 +72,15 @@ namespace OpenCosmos
             if (_Organisation is null) throw new ArgumentException("No organisation provided. INFLUXDB_ORG must be set to the organisation to use");
             if (pass is null || pass == "") throw new ArgumentException("No password defined. INFLUXDB_PASSWORD must be set to a valid password to configure the Influx DB");
 
-            Console.WriteLine("InfluxDB Driver initialised with:");
-            Console.WriteLine("Host: " + host);
-            Console.WriteLine("Port: " + port);
-            Console.WriteLine("Token: " + _Token);
-            Console.WriteLine("Bucket: " + _Bucket);
-            Console.WriteLine("Organisation: " + _Organisation);
+            var sb = new StringBuilder();
+            sb.AppendLine("InfluxDB Driver initialised with:");
+            sb.AppendLine("Host: " + host);
+            sb.AppendLine("Port: " + port);
+            sb.AppendLine("Token: " + _Token);
+            sb.AppendLine("Bucket: " + _Bucket);
+            sb.AppendLine("Organisation: " + _Organisation);
+
+            Log.Log(enLogLevel.Info, sb.ToString());
 
             _Client = InfluxDBClientFactory.Create(host + ":" + port, _Token.ToCharArray());            
         }

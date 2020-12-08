@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Logger;
 
 namespace OpenCosmos
 {
@@ -14,6 +15,8 @@ namespace OpenCosmos
         private readonly int _Port;
         private readonly iDBDriver _DBDriver;
         private bool _IsRunning;
+
+        private static readonly Logger.iLogger Log = new Logger.cLog4net(typeof(cReceiverBase));
 
         private void Decoding_Worker (BlockingCollection<byte[]> bc)
         {
@@ -39,10 +42,10 @@ namespace OpenCosmos
                         throw new UnreachableCodeException();
                     }
                 }
-                catch (InvalidOperationException e) { ReportError(e); }
-                catch (TelemetryFormatException e) { ReportError(e); }
-                catch (ArgumentException e) { ReportError(e); }
-            }   
+                catch (InvalidOperationException e) { Log.Log(enLogLevel.Error, e.Message); }
+                catch (TelemetryFormatException e) { Log.Log(enLogLevel.Error, e.Message); }
+                catch (ArgumentException e) { Log.Log(enLogLevel.Error, e.Message); }
+            }
         }
 
         public abstract cTelemetryEntry DecodeFrame(byte[] frame);
@@ -69,11 +72,6 @@ namespace OpenCosmos
 
         public abstract byte[] ReadFrameFromStream(NetworkStream ns, ref int TotalBytesReadFromStream);
 
-        private void ReportError(Exception e)
-        {
-            Console.WriteLine(DateTime.UtcNow.ToString("dd/MM/yy HH:mm:ss") + " " + e.Message);
-        }
-
         public void Start()
         {
             _IsRunning = true;
@@ -95,15 +93,15 @@ namespace OpenCosmos
             }
             catch (TelemetryFormatException e)
             {
-                Console.WriteLine(e.Message);
+                Log.Log(enLogLevel.Error, e.Message);
             }
             catch (ClientDisconnectedException)
             {
-                Console.WriteLine("Client Disconnected unexpectedly. Exiting.");
+                Log.Log(enLogLevel.Error, "Client Disconnected unexpectedly. Exiting.");
             }
             catch (SocketException e)
             {
-                Console.WriteLine("SocketException: {0}", e);
+                Log.Log(enLogLevel.Error, e.Message);
                 throw;
             }
             finally

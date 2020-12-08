@@ -3,6 +3,7 @@ WORKDIR /home/
 ARG version=0.0.1
 
 COPY ./Receiver/ ./Receiver
+COPY ./Logger/ ./Logger
 COPY ./ReceiverTest/ ./ReceiverTest
 COPY TelemetryReceiver.sln ./
 

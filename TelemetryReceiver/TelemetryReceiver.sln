@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Receiver", "Receiver\Receiv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReceiverTest", "ReceiverTest\ReceiverTest.csproj", "{0300E3CB-289C-4EC4-A997-D978ED07844F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{BEEFC96B-6314-4D79-B52B-4B1C2866D130}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{0300E3CB-289C-4EC4-A997-D978ED07844F}.Release|x64.Build.0 = Release|Any CPU
 		{0300E3CB-289C-4EC4-A997-D978ED07844F}.Release|x86.ActiveCfg = Release|Any CPU
 		{0300E3CB-289C-4EC4-A997-D978ED07844F}.Release|x86.Build.0 = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|x64.Build.0 = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Debug|x86.Build.0 = Debug|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|x64.ActiveCfg = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|x64.Build.0 = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|x86.ActiveCfg = Release|Any CPU
+		{BEEFC96B-6314-4D79-B52B-4B1C2866D130}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,5 +1,6 @@
 using System;
 using System.Net.Sockets;
+using Logger;
 
 namespace OpenCosmos
 {
@@ -8,6 +9,8 @@ namespace OpenCosmos
         private const byte FRAME_START_MARKER = (byte) '[';
         private const byte FRAME_END_MARKER = (byte) ']';
         private const int FRAME_BUFFER = 256;
+
+        private static readonly Logger.iLogger Log = new Logger.cLog4net(typeof(cStringReceiver));
 
         public override cTelemetryEntry DecodeFrame(byte[] frame)
         {
@@ -91,7 +94,7 @@ namespace OpenCosmos
             if (b != FRAME_START_MARKER)
             {
                 SeekToByteAfterStartMarker(ns, ref TotalBytesReadFromStream);
-                Console.WriteLine("Truncated Frame encountered, discarded {0} bytes.", TotalBytesReadFromStream);
+                Log.Log(enLogLevel.Warn, "Truncated Frame encountered, discarded {0} bytes.", TotalBytesReadFromStream);
             }
 
             // At this point we've either encountered a valid frame that starts with the correct marker
@@ -107,7 +110,7 @@ namespace OpenCosmos
                 if (b == FRAME_START_MARKER)
                 {
                     SeekToByteAfterStartMarker(ns, ref TotalBytesReadFromStream);
-                    Console.WriteLine("Malformed Frame encountered, detected second start marker before end marker.");
+                    Log.Log(enLogLevel.Warn, "Malformed Frame encountered, detected second start marker before end marker.");
                     ResetFrame(ref FrameBuffer, ref FrameIndex);
                 }
 

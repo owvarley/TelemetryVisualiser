@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 
 namespace OpenCosmos
 {
@@ -17,11 +18,15 @@ namespace OpenCosmos
             }
         }
 
-        public static void OutputValidTypes()
+        public static string OutputValidTypes()
         {
-            Console.WriteLine("Valid encoding types are: ");
-            Console.WriteLine("  string - String Encoding");
-            Console.WriteLine("  binary - Binary Encoding");
+            var sb = new StringBuilder();
+
+            sb.AppendLine("Valid encoding types are: ");
+            sb.AppendLine("  string - String Encoding");
+            sb.AppendLine("  binary - Binary Encoding");
+
+            return sb.ToString();
         }
     }
 }
