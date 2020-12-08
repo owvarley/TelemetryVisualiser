@@ -76,11 +76,13 @@ namespace OpenCosmos
         {
             _IsRunning = true;
 
-
             try
             {
+                Log.Log(enLogLevel.Info, "Starting up TCP Client on {0}:{1}", _Host, _Port);
                 _Client = new cTelemetryClient(_Host, _Port);
+                Log.Log(enLogLevel.Info, "TCP Client started");
                 _Client.CheckConnection();
+                Log.Log(enLogLevel.Info, "TCP Client connection Ok.");
 
                 using (BlockingCollection<byte[]> bc = new BlockingCollection<byte[]>())
                 {

@@ -12,7 +12,6 @@ services:
     build: TelemetryReceiver
     image: oc/telemetryreceiver
     command: string
-    network_mode: host
     environment:
       - TELEMETRY_PORT=8000
     env_file: 
@@ -24,7 +23,6 @@ services:
     build: TelemetryReceiver
     image: oc/telemetryreceiver
     command: binary
-    network_mode: host
     environment:
       - TELEMETRY_PORT=8001
     env_file: 
