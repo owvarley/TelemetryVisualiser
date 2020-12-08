@@ -1,6 +1,3 @@
 .vscode
-FromPep/
-TelemetryReceiver/Receiver/bin/
-TelemetryReceiver/Receiver/obj/
-TelemetryReceiver/ReceiverTest/obj/
-TelemetryReceiver/ReceiverTest/bin/
+TelemetryReceiver/*/obj/
+TelemetryReceiver/*/bin/
