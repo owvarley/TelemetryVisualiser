@@ -1,6 +1,15 @@
 # TelemetryVisualiser
 This project allows for telemetry from a ground station to be processed, stored and available for display.
 
+## Running the Project
+The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
+
+1. Open an appropriate command line client and clone the Git repository to your local machine
+2. Edit the **env_vars.env** file to supply a **INFLUXDB_PASSWORD** and **INFLUXDB_TOKEN**
+3. Type **docker-compose up --build** from the root directory
+4. Open a web browser and navigate to **http:\\localhost:8086** then log in using the username and password from **env_vars.env**
+5. Click the **boards** option of the side-bar, select **Satellite Telemetry** then select **5s** from the Refresh rate drop-down.
+
 ## Components
 The project is comprised of three distinct services:
 1. Telemetry Generator
@@ -16,7 +25,7 @@ The Telemetry Generator can be found within the **Telemetry** folder and consist
 The Telemetry Receiver handles the receiving of telemetry data from the **Telemetry Generator**, decoding it and then transmitting it onwards for storage within a database. The project has been written in C# using .NET Core 3.1 and is designed to be run within a container as a service. 
 
 ### Start-up Arguments
-The Telemetry Receiver can be configured to receive either **UTF-8 String** Encoding or **LE Binary** Encoding. The receiver encoding to use is set by argument passed to the container at runtime. To configure for **UTF-8 String** on port **8000** the container should be started with a command **string** for **LE Binary** on port **8001** the container should be started with the command **binary**. 
+The Telemetry Receiver can be configured to receive either **UTF-8 String** Encoding or **LE Binary** Encoding. The receiver encoding to use is set by argument passed to the container at runtime. To configure for **UTF-8 String** the container should be started with a command **string** for **LE Binary** the container should be started with the command **binary**. Both the port and the hostname on which the receiver will listen can be set via the **TELEMETRY_HOST** and **TELEMETRY_PORT** environmental variables.
 
 For example, to run up the **Telemetry Receiver** for **UTF-8 String** encoding as an independent container type:
 ```docker run -d -p 8000:8000 --env-file env_vars oc/telemetryreceiver string```
@@ -34,17 +43,11 @@ The project has been designed to use **Influx OSS DB** as the storage and visual
 - INFLUXDB_PASSWORD = Password for the username
 - INFLUXDB_TOKEN = Authorisation Token for use in Influx
 
+The password and token must both be set in order for the DB to boot.
+
 ## Telemetry Visualiser
 The Telemetry Visualiser handles the storage and display of the telemetry data that's received, decoded and transmitted onwards by a **Telemetry Receiver**. It provides a thin wrapper around the Influx OSS DB official Docker image (v2.0.2). The wrapper handles the initialisation and application of the appropriate template to ensure the most efficient display of telemetry within the solution.
 
 ### Usage
 To view the telemetry, open a web browser and go to ```http:\\localhost:8086``` and then login using the credentials supplied in the **env_vars.env** file. Once logged in, click **Boards** and then **Satellite Telemetry** to view a display of the data being transmitted from the **Telemetry Generator**. By default, the dashboard will be paused so be sure to select an appropriate refresh rate (Suggested is 5s) from the top right options to view a live display of data from the satellites.
 
-## Running the Project
-The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
-
-1. Open an appropriate command line client and clone the Git repository to your local machine
-2. Edit the **env_vars.env** file to supply a **INFLUXDB_PASSWORD** and **INFLUXDB_TOKEN**
-3. Type **docker-compose up --build** from the root directory
-4. Open a web browser and navigate to **http:\\localhost:8086** then log in using the username and password from **env_vars.env**
-5. Click the **boards** option of the side-bar, select **Satellite Telemetry** then select **5s** from the Refresh rate drop-down.
