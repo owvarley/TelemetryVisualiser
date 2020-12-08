@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace OpenCosmos.Test
@@ -8,7 +7,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_String()
         {
-            var receiver = cReceiverFactory.Create("host", 0, "string", null);
+            var receiver = cReceiverFactory.Create("string", null, null);
 
             Assert.IsType<cStringReceiver>(receiver);
         }
@@ -16,7 +15,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Binary()
         {
-            var receiver = cReceiverFactory.Create("host", 0, "binary", null);
+            var receiver = cReceiverFactory.Create("binary", null, null);
 
             Assert.IsType<cBinaryReceiver>(receiver);
         }
@@ -24,7 +23,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Invalid()
         {
-            Assert.Throws<UnknownEncodingException>(() => cReceiverFactory.Create("host", 0, "letthewookiewin", null));
+            Assert.Throws<UnknownEncodingException>(() => cReceiverFactory.Create("thisistheway", null, null));
         }
     }
 }

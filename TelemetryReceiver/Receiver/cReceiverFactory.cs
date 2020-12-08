@@ -5,14 +5,14 @@ namespace OpenCosmos
 {
     public static class cReceiverFactory
     {
-        public static iReceiver Create (string host, int port, string encodingType, iDBDriver dBDriver)
+        public static iReceiver Create (string EncodingType, iDBDriver DBDriver, iClient Client)
         {
-            switch (encodingType.ToLower())
+            switch (EncodingType.ToLower())
             {
                 case "string":
-                    return new cStringReceiver("string_sat", host, port, dBDriver);
+                    return new cStringReceiver("string_sat", DBDriver, Client);
                 case "binary":
-                    return new cBinaryReceiver("binary_sat", host, port, dBDriver);
+                    return new cBinaryReceiver("binary_sat", DBDriver, Client);
                 default:
                     throw new UnknownEncodingException();
             }

@@ -145,7 +145,7 @@ namespace OpenCosmos
             }
         }
 
-        public cStringReceiver(string NewSatName, string NewHost, int NewPort, iDBDriver DBDriver) : base(NewSatName, NewHost, NewPort, DBDriver)
+        public cStringReceiver(string NewSatName, iDBDriver DBDriver, cTelemetryClient NewClient) : base(NewSatName, DBDriver, NewClient)
         {
 
         }

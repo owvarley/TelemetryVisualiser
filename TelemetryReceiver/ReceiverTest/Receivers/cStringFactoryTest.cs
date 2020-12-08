@@ -32,7 +32,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 01;
             float teleValue = 2.000000f;
@@ -47,7 +47,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Max()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             Int64 unixTimeStamp = 253402300799; // Max value for FromUnixTimeSeconds
             UInt16 teleType = UInt16.MaxValue;
             float teleValue = float.MaxValue;
@@ -62,7 +62,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Negative()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 01;
             float teleValue = -152.000000f;
@@ -77,7 +77,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_TelemetryFormatException_Brackets()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 01;
             float teleValue = -152.000000f;
@@ -93,7 +93,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_TelemetryFormatException_NumParts()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 01;
             float teleValue = -152.000000f;
@@ -109,7 +109,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_TelemetryFormatException_IncorrectTimestamp()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             var rawTele = "[notatimestamp:01:-152.000000]";
 
             var ex = Assert.Throws<TelemetryFormatException>(() => receiver.DecodeFrame(Encoding.UTF8.GetBytes(rawTele)));
@@ -120,7 +120,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_TelemetryFormatException_IncorrectType()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             var rawTele = "[1604614491:65536:-152.000000]";
 
             var ex = Assert.Throws<TelemetryFormatException>(() => receiver.DecodeFrame(Encoding.UTF8.GetBytes(rawTele)));
@@ -131,7 +131,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_TelemetryFormatException_IncorrectValue()
         {
-            var receiver = new cStringReceiver("name", "host", 5000, null);
+            var receiver = new cStringReceiver("name", null, null);
             var rawTele = "[1604614491:015:cheese]";
 
             var ex = Assert.Throws<TelemetryFormatException>(() => receiver.DecodeFrame(Encoding.UTF8.GetBytes(rawTele)));

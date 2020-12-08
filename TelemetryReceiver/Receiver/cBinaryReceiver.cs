@@ -60,7 +60,7 @@ namespace OpenCosmos
             return frame;
         }
 
-        public cBinaryReceiver(string NewSatName, string NewHost, int NewPort, iDBDriver DBDriver) : base(NewSatName, NewHost, NewPort, DBDriver)
+        public cBinaryReceiver(string NewSatName, iDBDriver DBDriver, iClient NewClient) : base(NewSatName, DBDriver, NewClient)
         {
 
         }

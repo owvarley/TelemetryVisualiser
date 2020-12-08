@@ -1,6 +1,5 @@
 using System;
 using System.Net.Sockets;
-using System.IO;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Logger;
@@ -9,10 +8,8 @@ namespace OpenCosmos
 {
     public abstract class cReceiverBase : iReceiver
     {
-        private cTelemetryClient _Client;
+        private iClient _Client;
         private readonly string _SatName;
-        private readonly string _Host;
-        private readonly int _Port;
         private readonly iDBDriver _DBDriver;
         private bool _IsRunning;
 
@@ -78,20 +75,23 @@ namespace OpenCosmos
 
             try
             {
-                Log.Log(enLogLevel.Info, "Starting up TCP Client on {0}:{1}", _Host, _Port);
-                _Client = new cTelemetryClient(_Host, _Port);
-                Log.Log(enLogLevel.Info, "TCP Client started");
-                _Client.CheckConnection();
-                Log.Log(enLogLevel.Info, "TCP Client connection Ok.");
+                _Client.Connect();
 
                 using (BlockingCollection<byte[]> bc = new BlockingCollection<byte[]>())
                 {
+                    Log.Log(enLogLevel.Info, "Starting task to Receive frames from Network Stream");
                     var Receive_Task = Task.Run( () => Receiver_Worker(bc) );
+                    Log.Log(enLogLevel.Info, "Receiver task started");
+
+                    Log.Log(enLogLevel.Info, "Starting task to Decode frames from receiver");
                     var Decode_Task = Task.Run( () => Decoding_Worker(bc) );
+                    Log.Log(enLogLevel.Info, "Decoding task started");
 
                     Receive_Task.Wait();
                     Decode_Task.Wait();
                 }
+
+                Log.Log(enLogLevel.Info, "Receiver and Decoding tasks completed");
             }
             catch (System.AggregateException ae)
             {
@@ -130,15 +130,15 @@ namespace OpenCosmos
 
         public void Stop()
         {
+            Log.Log(enLogLevel.Info, "Stopping Receiver and Decoding tasks");
             _IsRunning = false;
         }
 
-        public cReceiverBase(string NewSatName, string NewHost, int NewPort, iDBDriver NewDriver)
+        public cReceiverBase(string NewSatName, iDBDriver NewDriver, iClient NewClient)
         {
             _SatName = NewSatName;
-            _Host = NewHost;
-            _Port = NewPort;
             _DBDriver = NewDriver;
+            _Client = NewClient;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_CheckHeaderPresent()
         {
-            var receiver = new cBinaryReceiver("name", "host", 0, null);
+            var receiver = new cBinaryReceiver("name", null, null);
             var rawTele = new byte[18];
 
             rawTele[0] = 00;
@@ -47,7 +47,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create()
         {
-            var receiver = new cBinaryReceiver("name", "host", 0, null);
+            var receiver = new cBinaryReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 02;
             float teleValue = 2.0f;
@@ -62,7 +62,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Negative()
         {
-            var receiver = new cBinaryReceiver("name", "host", 0, null);
+            var receiver = new cBinaryReceiver("name", null, null);
             Int64 unixTimeStamp = 1604614491;
             UInt16 teleType = 02;
             float teleValue = -500.0f;
@@ -77,7 +77,7 @@ namespace OpenCosmos.Test
         [Fact]
         public void Test_Create_Max()
         {
-            var receiver = new cBinaryReceiver("name", "host", 0, null);
+            var receiver = new cBinaryReceiver("name", null, null);
             Int64 unixTimeStamp = 253402300799; // Max value for FromUnixTimeSeconds
             UInt16 teleType = UInt16.MaxValue;
             float teleValue = float.MaxValue;

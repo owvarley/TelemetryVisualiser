@@ -45,7 +45,8 @@ namespace OpenCosmos
 
             try
             {
-                var receiver = cReceiverFactory.Create(GetHost(), GetPort(), args[FIRST_ARG], new cInfluxDriver(cInfluxDriver.tInfluxConfig.Default));
+                var client = new cTelemetryClient(GetHost(), GetPort());
+                var receiver = cReceiverFactory.Create(args[FIRST_ARG], new cInfluxDriver(cInfluxDriver.tInfluxConfig.Default), client);
                 Log.Log(enLogLevel.Info, "Using Receiver Type: {0}", receiver.GetType());
 
                 receiver.Start();
