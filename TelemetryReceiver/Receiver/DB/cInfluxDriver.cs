@@ -14,6 +14,28 @@ namespace OpenCosmos
         private readonly string _Bucket;
         private readonly string _Organisation;
 
+        public struct tInfluxConfig
+        {
+            public string Host;
+            public string Port;
+            public string Token;
+            public string Bucket;
+            public string Organisation;
+            public string Password;
+
+            public static tInfluxConfig Default => (
+                new tInfluxConfig
+                {
+                    Host = Environment.GetEnvironmentVariable("INFLUXDB_HOST"),
+                    Port = Environment.GetEnvironmentVariable("INFLUXDB_PORT"),
+                    Token = Environment.GetEnvironmentVariable("INFLUXDB_TOKEN"),
+                    Bucket = Environment.GetEnvironmentVariable("INFLUXDB_BUCKET"),
+                    Organisation = Environment.GetEnvironmentVariable("INFLUXDB_ORG"),
+                    Password = Environment.GetEnvironmentVariable("INFLUXDB_PASSWORD")
+                }
+            );
+        }
+
         public bool WriteToDB(cTelemetryEntry telemetryEntry, string SatName)
         {
             var point = PointData
@@ -30,19 +52,21 @@ namespace OpenCosmos
             return true;
         }
 
-        public cInfluxDriver()
+        public cInfluxDriver(tInfluxConfig NewConfig)
         {
-            var host = Environment.GetEnvironmentVariable("INFLUXDB_HOST");
-            var port = Environment.GetEnvironmentVariable("INFLUXDB_PORT");
-            _Token = Environment.GetEnvironmentVariable("INFLUXDB_TOKEN");
-            _Bucket = Environment.GetEnvironmentVariable("INFLUXDB_BUCKET");
-            _Organisation = Environment.GetEnvironmentVariable("INFLUXDB_ORG");
+            var host = NewConfig.Host;
+            var port = NewConfig.Port;
+            _Token = NewConfig.Token;
+            _Bucket = NewConfig.Bucket;
+            _Organisation = NewConfig.Organisation;
+            var pass = NewConfig.Password;
 
             if (host is null) host = "http://localhost:";
             if (port is null) port = "8086";
-            if (_Token is null) throw new ArgumentException("No token provided. INFLUXDB_TOKEN must be set to the correct token for access to the Influx DB");
+            if (_Token is null || _Token == "") throw new ArgumentException("No token provided. INFLUXDB_TOKEN must be set to the correct token for access to the Influx DB");
             if (_Bucket is null) _Bucket = "telemetry";
             if (_Organisation is null) throw new ArgumentException("No organisation provided. INFLUXDB_ORG must be set to the organisation to use");
+            if (pass is null || pass == "") throw new ArgumentException("No password defined. INFLUXDB_PASSWORD must be set to a valid password to configure the Influx DB");
 
             Console.WriteLine("InfluxDB Driver initialised with:");
             Console.WriteLine("Host: " + host);

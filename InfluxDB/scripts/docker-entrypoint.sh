@@ -1,6 +1,17 @@
 #!/bin/bash
 set -m # allow job control
 
+echo Checking password and token have been set
+if [ "$INFLUXDB_PASSWORD" = "" ]; then
+    echo Error : No user password supplied via INFLUXDB_PASSWORD environment variable. Unable to proceed.
+    exit 1
+fi
+
+if [ "$INFLUXDB_TOKEN" = "" ]; then
+    echo Error : No access token defined via INFLUXDB_TOKEN environment variable. Unable to proceed.
+    exit 1
+fi
+
 echo Booting up Influx DB in the background
 /usr/bin/influxd &
 
