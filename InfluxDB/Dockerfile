@@ -1,11 +1,13 @@
 FROM quay.io/influxdb/influxdb:v2.0.2
 
-# Copy and sort startup scripts
-RUN mv entrypoint.sh entrypoint_influxdb.sh
-COPY scripts/docker-entrypoint.sh entrypoint.sh
-RUN chmod +x entrypoint.sh
-
-# Copy in template
+COPY scripts/docker-entrypoint.sh docker-entrypoint.sh
 COPY template/telemetry_template.yml /home/templates/template.yml
 
-ENTRYPOINT [ "/bin/bash", "entrypoint.sh" ]
+RUN apt-get update \
+ && apt-get install -y dos2unix \
+ && dos2unix docker-entrypoint.sh \
+ && chmod +x docker-entrypoint.sh \
+ && apt-get remove --purge -y dos2unix \
+ && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT [ "/bin/bash", "docker-entrypoint.sh" ]
