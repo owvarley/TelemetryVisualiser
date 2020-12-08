@@ -93,6 +93,18 @@ namespace OpenCosmos
                     Decode_Task.Wait();
                 }
             }
+            catch (System.AggregateException ae)
+            {
+                ae.Handle((x) =>
+                {
+                    if (x is System.IO.IOException || x is SocketException) 
+                    {
+                        Log.Log(enLogLevel.Error, x.Message);
+                        return true;
+                    }
+                    return false; // Unhandled - exit program via finally
+                });
+            }
             catch (TelemetryFormatException e)
             {
                 Log.Log(enLogLevel.Error, e.Message);
@@ -101,13 +113,17 @@ namespace OpenCosmos
             {
                 Log.Log(enLogLevel.Error, "Client Disconnected unexpectedly. Exiting.");
             }
+            catch (System.IO.IOException e)
+            {
+                Log.Log(enLogLevel.Error, e.Message);
+            }
             catch (SocketException e)
             {
                 Log.Log(enLogLevel.Error, e.Message);
-                throw;
             }
             finally
             {
+                _IsRunning = false;
                 _Client.Close();
             }
         }

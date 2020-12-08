@@ -50,6 +50,10 @@ namespace OpenCosmos
 
                 receiver.Start();
             }
+            catch (ArgumentException e)
+            {
+                Log.Log(enLogLevel.Error, e.Message);
+            }
             catch (System.IndexOutOfRangeException)
             {
                 Log.Log(enLogLevel.Error, "No Encoding was supplied.");
