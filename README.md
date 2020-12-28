@@ -1,5 +1,5 @@
 # TelemetryVisualiser
-This project allows for telemetry from a ground station to be processed, stored and available for display.
+This project was created as part of a Challenge Project for a job interview. It allows for telemetry from a simulated ground station to be processed, stored and available for display graphically. Definitely one of the more interesting challenge projects I've been given and one that I really enjoyed.
 
 > ## TLDR - Running the Project
 > The project has been configured to be run using **Docker Compose**. To run it, follow the steps below:
